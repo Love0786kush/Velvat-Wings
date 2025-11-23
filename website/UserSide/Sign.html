@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Velvet Wings - Login & Register">
+    <meta name="keywords" content="fashion, ecommerce, login, register, velvet wings">
+    <meta name="author" content="Velvet Wings">
+    <title>Login | Velvet Wings</title>
+    <link rel="stylesheet" href="./Css/Style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+</head>
+<body>
+    <!-- ================= LOADER ================= -->
+    <div id="loader">
+        <div class="loader-box">
+            <img src="./Assets/logo.png" alt="Velvet Wings">
+            <p>Velvet Wings...</p>
+        </div>
+    </div>
+
+    <!-- ================= SIGN PAGE CONTENT ================= -->
+    <div class="sign-container">
+        <div class="sign-card">
+            <!-- Left Side - Branding -->
+            <div class="sign-left">
+                <div class="sign-logo">
+                    <img src="./Assets/logo.png" alt="Velvet Wings">
+                    <h1>Velvet Wings</h1>
+                    <p>Premium Fashion Destination</p>
+                </div>
+                
+                <ul class="sign-features">
+                    <li>
+                        <i class="fas fa-shipping-fast"></i>
+                        <span>Free Shipping on orders over ₹999</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-undo-alt"></i>
+                        <span>Easy 30-day return policy</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Secure payment processing</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-headset"></i>
+                        <span>24/7 Customer support</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Right Side - Forms -->
+            <div class="sign-right">
+                <div class="form-container">
+                    <!-- Form Toggle -->
+                    <div class="form-toggle">
+                        <button class="toggle-btn active" data-form="login">Login</button>
+                        <button class="toggle-btn" data-form="register">Register</button>
+                    </div>
+
+                    <!-- Login Form -->
+                    <div class="form-section active" id="login-form">
+                        <div class="form-title">
+                            <h2>Welcome Back</h2>
+                            <p>Sign in to your account to continue shopping</p>
+                        </div>
+
+                        <form id="loginForm">
+                            <div class="form-group">
+                                <label for="loginEmail">Email Address</label>
+                                <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="loginPassword">Password</label>
+                                <div class="password-input">
+                                    <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" required>
+                                    <button type="button" class="password-toggle" onclick="togglePassword('loginPassword')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="form-options">
+                                <label class="remember-me">
+                                    <input type="checkbox" id="rememberMe">
+                                    Remember me
+                                </label>
+                                <a href="#" class="forgot-password">Forgot password?</a>
+                            </div>
+
+                            <button type="submit" class="btn-sign">Sign In</button>
+                        </form>
+
+                        <div class="divider">
+                            <span>Or continue with</span>
+                        </div>
+
+                        <button class="btn-google" onclick="signInWithGoogle()">
+                            <i class="fab fa-google"></i>
+                            Sign in with Google
+                        </button>
+
+                        <div class="sign-footer">
+                            Don't have an account? <a href="#" onclick="showForm('register')">Sign up</a>
+                        </div>
+                    </div>
+
+                    <!-- Register Form -->
+                    <div class="form-section" id="register-form">
+                        <div class="form-title">
+                            <h2>Create Account</h2>
+                            <p>Join Velvet Wings for exclusive benefits</p>
+                        </div>
+
+                        <form id="registerForm">
+                            <div class="form-group">
+                                <label for="registerName">Full Name</label>
+                                <input type="text" id="registerName" class="form-control" placeholder="Enter your full name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="registerEmail">Email Address</label>
+                                <input type="email" id="registerEmail" class="form-control" placeholder="Enter your email" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="registerPhone">Phone Number</label>
+                                <input type="tel" id="registerPhone" class="form-control" placeholder="Enter your phone number">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="registerPassword">Password</label>
+                                <div class="password-input">
+                                    <input type="password" id="registerPassword" class="form-control" placeholder="Create a password" required>
+                                    <button type="button" class="password-toggle" onclick="togglePassword('registerPassword')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="registerConfirmPassword">Confirm Password</label>
+                                <div class="password-input">
+                                    <input type="password" id="registerConfirmPassword" class="form-control" placeholder="Confirm your password" required>
+                                    <button type="button" class="password-toggle" onclick="togglePassword('registerConfirmPassword')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="form-options">
+                                <label class="remember-me">
+                                    <input type="checkbox" id="acceptTerms" required>
+                                    I agree to the <a href="#" style="color: var(--primary-color);">Terms & Conditions</a>
+                                </label>
+                            </div>
+
+                            <button type="submit" class="btn-sign">Create Account</button>
+                        </form>
+
+                        <div class="divider">
+                            <span>Or sign up with</span>
+                        </div>
+
+                        <button class="btn-google" onclick="signInWithGoogle()">
+                            <i class="fab fa-google"></i>
+                            Sign up with Google
+                        </button>
+
+                        <div class="sign-footer">
+                            Already have an account? <a href="#" onclick="showForm('login')">Sign in</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/loader.js"></script>
+    
+</body>
+</html>

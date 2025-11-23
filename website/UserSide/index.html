@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Velvet Wings - Premium Online Fashion Store">
+    <meta name="keywords" content="fashion, ecommerce, shopping, clothing, velvet wings">
+    <meta name="author" content="Velvet Wings">
+    <title>Velvet Wings | E-Commerce</title>
+    <link rel="stylesheet" href="./Css/Style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <!-- ================= LOADER ================= -->
+    <div id="loader">
+        <div class="loader-box">
+            <img src="./Assets/logo.png" alt="Velvet Wings">
+            <p>Velvet Wings...</p>
+        </div>
+    </div>
+
+    <!-- ================= HEADER ================= -->
+    <header class="header">
+        <!-- Mobile toggle -->
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="menu-toggle">☰</label>
+
+        <!-- Logo -->
+        <div class="logo">
+            <img src="./Assets/logo.png" alt="Velvet Wings Logo">
+        </div>
+
+        <!-- Navbar -->
+        <nav class="navbar">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Products</a></li>
+                <li><a href="#">Categories</a></li>
+                <li><a href="#">Contact</a></li>
+              
+            </ul>
+        </nav>
+
+        <!-- Icons -->
+        <div id="icons">
+            <!-- Search -->
+            <div class="search-wrapper" id="searchWrapper">
+                <i class="fa-solid fa-magnifying-glass" id="searchIcon"></i>
+                <input type="text" id="searchInput" placeholder="Search products...">
+            </div>
+
+            <!-- Cart -->
+            <div class="icon-item" id="cartIcon">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="cart-count">0</span>
+            </div>
+
+            <!-- User / Profile -->
+            <div class="icon-item" id="userIconContainer">
+                <i class="fa-solid fa-user" id="userIcon"></i>
+            </div>
+        </div>
+
+        <!-- Profile Dropdown -->
+        <div class="profile-menu" id="profileMenu">
+            <a href="sign.html">Login/Signup</a>
+            <a href="profile.html">My Profile</a>
+        </div>
+    </header>
+
+    <!-- ================= CART POPUP ================= -->
+    <div class="cart-popup" id="cartPopup">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <button class="close-cart">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will appear here -->
+        </div>
+        <div class="cart-total">
+            <p>Total: ₹<span id="cartTotal">0</span></p>
+            <button class="checkout-btn">Checkout</button>
+        </div>
+    </div>
+
+    <!-- ================= HERO SLIDER ================= -->
+    <section class="hero">
+        <div class="hero-slider">
+            <!-- Slide 1 -->
+            <div class="hero-slide active">
+                <div class="hero-content">
+                    <p>Summer Sale</p>
+                    <h1>Get Up to <br>50% Off</h1>
+                    <div class="hero-buttons">
+                        <a href="#" class="btn">Shop Now</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="./Assets/banner-5.png" alt="Banner 1">
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="hero-slide">
+                <div class="hero-content">
+                    <p>New Arrivals</p>
+                    <h1>Winter <br>Collection</h1>
+                    <div class="hero-buttons">
+                        <a href="#" class="btn">Explore</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="./Assets/banner-4.png" alt="Banner 2">
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="hero-slide">
+                <div class="hero-content">
+                    <p>Trending Now</p>
+                    <h1>Premium <br>Fashion</h1>
+                    <div class="hero-buttons">
+                        <a href="#" class="btn">View Now</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="./Assets/banner-3.png" alt="Banner 3">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= CATEGORY SECTION ================= -->
+    <section class="category-section">
+        <div class="category-grid">
+            <!-- MEN -->
+            <div class="category-card men">
+                <img src="./Assets/cate-men.png" alt="Men Collection">
+                <div class="category-content">
+                    <h2>Men <br>Collection</h2>
+                    <div class="shop-btn">
+                        <a href="#" class="shop-btn-link">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WOMEN -->
+            <div class="category-card female">
+                <img src="./Assets/cate-female.png" alt="Women Collection">
+                <div class="category-content">
+                    <h2>Women <br>Collection</h2>
+                    <div class="shop-btn">
+                        <a href="#" class="shop-btn-link">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOP COLLECTION -->
+            <div class="category-card top-collection">
+                <img src="./Assets/top-coll.png" alt="Top Collection">
+                <div class="category-content">
+                    <h2>Top <br>Collection</h2>
+                    <div class="shop-btn">
+                        <a href="#" class="shop-btn-link">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= FEATURED PRODUCTS ================= -->
+    <section class="featured-section">
+        <h2 class="section-title">Featured Products</h2>
+        <!-- Dynamic Product Container -->
+        <div class="product-grid" id="productGrid">
+            <!-- Products will load dynamically -->
+        </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+        <!-- Wave Animation -->
+        <div class="wave-container">
+            <div class="wave wave1"></div>
+            <div class="wave wave2"></div>
+            <div class="wave wave3"></div>
+        </div>
+
+        <div class="footer-grid">
+            <div>
+                <h3>Company</h3>
+                <a href="#">About</a>
+                <a href="#">Careers</a>
+                <a href="#">Blog</a>
+            </div>
+
+            <div>
+                <h3>Support</h3>
+                <a href="#">Help Center</a>
+                <a href="#">Contact</a>
+                <a href="#">FAQs</a>
+            </div>
+
+            <div>
+                <h3>Legal</h3>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Refund Policy</a>
+            </div>
+        </div>
+
+        <p class="footer-copy">© 2025 Velvet Wings. All rights reserved.</p>
+    </footer>
+
+    <script src="./js/loader.js"></script>
+</body>
+</html>
