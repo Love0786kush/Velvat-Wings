@@ -178,6 +178,8 @@ if (checkoutBtn) {
     });
 }
 
+
+
 // Profile page specific JavaScript
 document.addEventListener('DOMContentLoaded', function() {
     // Profile menu navigation - Only on profile page
@@ -243,7 +245,6 @@ setTimeout(function() {
 
 
 
-
 document.addEventListener('DOMContentLoaded', function () {
 
     // ================= FORM TOGGLE =================
@@ -263,48 +264,54 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // ================= LOGIN FORM =================
-    document.getElementById("loginForm").addEventListener("submit", function (e) {
-        e.preventDefault();
+    const loginForm = document.getElementById("loginForm");
+    if (loginForm) {
+        loginForm.addEventListener("submit", function (e) {
+            e.preventDefault();
 
-        const email = document.getElementById("loginEmail").value.trim();
-        const password = document.getElementById("loginPassword").value.trim();
+            const email = document.getElementById("loginEmail").value.trim();
+            const password = document.getElementById("loginPassword").value.trim();
 
-        if (!email || !password) {
-            showToast("Please fill all fields ❌", "error");
-            return;
-        }
+            if (!email || !password) {
+                showToast("Please fill all fields ❌", "error");
+                return;
+            }
 
-        loginAPI(email, password);
-    });
+            loginAPI(email, password);
+        });
+    }
 
     // ================= REGISTER FORM =================
-    document.getElementById("registerForm").addEventListener("submit", function (e) {
-        e.preventDefault();
+    const registerForm = document.getElementById("registerForm");
+    if (registerForm) {
+        registerForm.addEventListener("submit", function (e) {
+            e.preventDefault();
 
-        const name = document.getElementById("registerName").value.trim();
-        const email = document.getElementById("registerEmail").value.trim();
-        const password = document.getElementById("registerPassword").value.trim();
-        const confirmPassword = document.getElementById("registerConfirmPassword").value.trim();
+            const name = document.getElementById("registerName").value.trim();
+            const email = document.getElementById("registerEmail").value.trim();
+            const password = document.getElementById("registerPassword").value.trim();
+            const confirmPassword = document.getElementById("registerConfirmPassword").value.trim();
 
-        if (!name || !email || !password || !confirmPassword) {
-            showToast("Please fill all fields ❌", "error");
-            return;
-        }
+            if (!name || !email || !password || !confirmPassword) {
+                showToast("Please fill all fields ❌", "error");
+                return;
+            }
 
-        if (password !== confirmPassword) {
-            showToast("Passwords do not match ❌", "error");
-            return;
-        }
+            if (password !== confirmPassword) {
+                showToast("Passwords do not match ❌", "error");
+                return;
+            }
 
-        if (!document.getElementById("acceptTerms").checked) {
-            showToast("Accept Terms & Conditions ❌", "error");
-            return;
-        }
+            const terms = document.getElementById("acceptTerms");
+            if (terms && !terms.checked) {
+                showToast("Accept Terms & Conditions ❌", "error");
+                return;
+            }
 
-        registerAPI(name, email, password);
-    });
+            registerAPI(name, email, password);
+        });
+    }
 });
-
 
 // ================= CUSTOM TOAST =================
 function showToast(message, type = "info") {
@@ -336,11 +343,8 @@ function showToast(message, type = "info") {
     toast.innerText = message;
     toast.style.opacity = "1";
 
-    setTimeout(() => {
-        toast.style.opacity = "0";
-    }, 3000);
+    setTimeout(() => { toast.style.opacity = "0"; }, 3000);
 }
-
 
 // ================= LOGIN API =================
 async function loginAPI(email, password) {
@@ -351,20 +355,17 @@ async function loginAPI(email, password) {
         const response = await fetch("https://ecommerce-2-i0yq.onrender.com/api/auth/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                email: email,
-                password: password
-            })
+            body: JSON.stringify({ email, password })
         });
 
-        const rawText = await response.text();
-        console.log("Login Raw Response:", rawText);
+        const text = await response.text();
+        console.log("Login Raw Response:", text);
 
         let data;
         try {
-            data = JSON.parse(rawText);
+            data = JSON.parse(text);
         } catch {
-            data = rawText;
+            data = { message: text };
         }
 
         if (response.ok) {
@@ -373,18 +374,17 @@ async function loginAPI(email, password) {
             localStorage.setItem("userEmail", email);
             localStorage.setItem("userRole", data.role || "USER");
 
-            showToast("Login successful ✅", "success");
+            showToast("Login Successful ✅", "success");
 
             setTimeout(() => {
-                if (data.role === "ADMIN") {
+                if (data.role === "ADMIN")
                     window.location.href = "admin-dashboard.html";
-                } else {
+                else
                     window.location.href = "index.html";
-                }
-            }, 1200);
+            }, 1500);
 
         } else {
-            showToast(data.message || data || "Login Failed ❌", "error");
+            showToast(data.message || "Login Failed ❌", "error");
         }
 
     } catch (error) {
@@ -392,7 +392,6 @@ async function loginAPI(email, password) {
         showToast("Server error while login ❌", "error");
     }
 }
-
 
 // ================= REGISTER API =================
 async function registerAPI(name, email, password) {
@@ -404,45 +403,41 @@ async function registerAPI(name, email, password) {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                name: name,
-                email: email,
-                password: password,
-                role: "USER"   // ✅ Backend ke liye required
+                name,
+                email,
+                password,
+                role: "USER"
             })
         });
 
-        const rawText = await response.text();
-        console.log("Register Raw Response:", rawText);
+        const text = await response.text();
+        console.log("Register Raw Response:", text);
 
         let data;
         try {
-            data = JSON.parse(rawText);
+            data = JSON.parse(text);
         } catch {
-            data = rawText;
+            data = { message: text };
         }
 
         if (response.ok) {
-
-            showToast("Registration Successful ✅ Now Login", "success");
+            showToast("Account Created ✅ Now Login", "success");
 
             setTimeout(() => {
                 showForm("login");
             }, 1500);
-
         } else {
-            showToast(data.message || data || "Registration Failed ❌", "error");
+            showToast(data.message || "Registration Failed ❌", "error");
         }
 
     } catch (error) {
         console.error("Register Error:", error);
-        showToast("Server error while registering ❌", "error");
+        showToast("Server error while register ❌", "error");
     }
 }
 
-
 // ================= SHOW FORM =================
 function showForm(formType) {
-
     const toggleButtons = document.querySelectorAll('.toggle-btn');
     const formSections = document.querySelectorAll('.form-section');
 
@@ -457,10 +452,8 @@ function showForm(formType) {
     document.getElementById(`${formType}-form`).classList.add('active');
 }
 
-
 // ================= PASSWORD TOGGLE =================
 function togglePassword(inputId) {
-
     const input = document.getElementById(inputId);
     const icon = input.nextElementSibling.querySelector("i");
 
@@ -473,8 +466,7 @@ function togglePassword(inputId) {
     }
 }
 
-
-// ================= GOOGLE LOGIN =================
+// ================= GOOGLE LOGIN (FUTURE) =================
 function signInWithGoogle() {
     showToast("Google login coming soon 🚀", "info");
 }
