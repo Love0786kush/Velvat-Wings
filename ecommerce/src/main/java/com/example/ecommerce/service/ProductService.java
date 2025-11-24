@@ -4,8 +4,8 @@ import com.example.ecommerce.model.Product;
 import com.example.ecommerce.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -16,48 +16,40 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    // ✅ SAVE PRODUCT
-    public Product save(Product product) {
+    public List<Product> getActiveProducts() {
+        return productRepository.findByActiveTrue();
+    }
+
+    public Product getById(String id) throws Exception {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new Exception("Product not found"));
+    }
+
+    public Product create(Product product) {
+        product.setCreatedAt(Instant.now());
+        product.setUpdatedAt(Instant.now());
+        product.setActive(true);
         return productRepository.save(product);
     }
 
-    // ✅ GET ALL PRODUCTS
-    public List<Product> getAll() {
-        return productRepository.findAll();
-    }
+    public Product update(String id, Product updated) throws Exception {
+        Product existing = getById(id);
 
-    // ✅ GET PRODUCT BY ID
-    public Product getById(String id) {
-        Optional<Product> optional = productRepository.findById(id);
-        return optional.orElse(null);
-    }
-
-    // ✅ UPDATE PRODUCT
-    public Product update(String id, Product updatedProduct) {
-
-        Product existing = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found ❌"));
-
-        existing.setName(updatedProduct.getName());
-        existing.setDescription(updatedProduct.getDescription());
-        existing.setPrice(updatedProduct.getPrice());
-        existing.setImageUrl(updatedProduct.getImageUrl());
+        existing.setName(updated.getName());
+        existing.setDescription(updated.getDescription());
+        existing.setPrice(updated.getPrice());
+        existing.setDiscountPrice(updated.getDiscountPrice());
+        existing.setImages(updated.getImages());
+        existing.setCategoryId(updated.getCategoryId());
+        existing.setTags(updated.getTags());
+        existing.setStock(updated.getStock());
+        existing.setActive(updated.isActive());
+        existing.setUpdatedAt(Instant.now());
 
         return productRepository.save(existing);
     }
 
-    // ✅ DELETE PRODUCT
     public void delete(String id) {
-
-        if (!productRepository.existsById(id)) {
-            throw new RuntimeException("Product not found ❌");
-        }
-
         productRepository.deleteById(id);
-    }
-
-    // ✅ SEARCH PRODUCT (optional feature)
-    public List<Product> search(String keyword) {
-        return productRepository.findByNameContainingIgnoreCase(keyword);
     }
 }

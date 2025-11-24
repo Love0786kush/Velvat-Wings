@@ -69,7 +69,8 @@ body {
     align-items: center;
     justify-content: space-between;
     z-index: 1000;
-    background: rgba(15, 14, 14, 0.8);
+ background: linear-gradient(5deg, var(--primary-color) 0%, var(--accent-color) 100%);
+           
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-subtle);
@@ -578,7 +579,7 @@ body {
 /* =============== FOOTER DESIGN =============== */
 .footer {
     position: relative;
-    background: linear-gradient(135deg, #0F0E0E, #1a1a1a);
+    background: linear-gradient(135deg, var(--primary-color)20%, var(--accent-color) 80%);
     color: white;
     padding: 90px 8% 40px;
     overflow: hidden;

@@ -4,78 +4,78 @@ import com.example.ecommerce.model.User;
 import com.example.ecommerce.payload.LoginRequest;
 import com.example.ecommerce.payload.RegisterRequest;
 import com.example.ecommerce.repository.UserRepository;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    // ✅ USER REGISTER
-    public void registerUser(RegisterRequest request) {
+    // Register normal user
+    public void registerUser(RegisterRequest request) throws Exception {
 
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email already exists ❌");
+            throw new Exception("Email already registered");
         }
 
         User user = new User();
-        user.setUsername(request.getUsername());
+        user.setUsername(request.getName());
         user.setEmail(request.getEmail());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setPassword(request.getPassword()); // TODO: bcrypt
         user.setRole("ROLE_USER");
-
         userRepository.save(user);
     }
 
-    // ✅ ADMIN REGISTER
-    public void registerAdmin(RegisterRequest request) {
+    // Register admin
+    public void registerAdmin(RegisterRequest request) throws Exception {
 
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email already exists ❌");
+            throw new Exception("Email already registered");
         }
 
         User user = new User();
-        user.setUsername(request.getUsername());
+        user.setUsername(request.getName());
         user.setEmail(request.getEmail());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setPassword(request.getPassword());
         user.setRole("ROLE_ADMIN");
-
         userRepository.save(user);
     }
 
-    // ✅ LOGIN VALIDATION
-    public User validateUser(LoginRequest request) {
+    public User validateUser(LoginRequest request) throws Exception {
 
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found ❌"));
+                .orElseThrow(() -> new Exception("User not found"));
 
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Invalid password ❌");
+        if (!user.getPassword().equals(request.getPassword())) {
+            throw new Exception("Invalid password");
         }
 
         return user;
     }
 
-    // ✅ FIND USER BY EMAIL
-    public User findByEmail(String email) {
-
+    public User getByEmail(String email) throws Exception {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found ❌"));
+                .orElseThrow(() -> new Exception("User not found"));
     }
 
-    // ✅ CHECK ADMIN ROLE
-    public void checkAdmin(String email) {
+    public User updateProfile(String email, User updated) throws Exception {
 
-        User user = findByEmail(email);
+        User user = getByEmail(email);
 
-        if (!"ROLE_ADMIN".equals(user.getRole())) {
-            throw new RuntimeException("Access denied! Admin role required ❌");
+        user.setFirstName(updated.getFirstName());
+        user.setLastName(updated.getLastName());
+        user.setPhone(updated.getPhone());
+        user.setBirthdate(updated.getBirthdate());
+        user.setProfileImage(updated.getProfileImage());
+
+        if (updated.getUsername() != null) {
+            user.setUsername(updated.getUsername());
         }
+
+        return userRepository.save(user);
     }
 }

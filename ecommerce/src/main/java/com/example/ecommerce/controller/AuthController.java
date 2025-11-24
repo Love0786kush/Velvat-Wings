@@ -13,6 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(origins = "*")
 public class AuthController {
 
     private final UserService userService;
@@ -21,7 +22,6 @@ public class AuthController {
         this.userService = userService;
     }
 
-    // ✅ Register API (Default ROLE_USER)
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
         try {
@@ -34,7 +34,6 @@ public class AuthController {
         }
     }
 
-    // ✅ Admin Register API
     @PostMapping("/register-admin")
     public ResponseEntity<?> registerAdmin(@RequestBody RegisterRequest request) {
         try {
@@ -47,7 +46,6 @@ public class AuthController {
         }
     }
 
-    // ✅ Login API (User + Admin dono ke liye)
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         try {
